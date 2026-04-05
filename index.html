@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>?12dajas1edsadas!2</title>
+<title>Matrix Chaos</title>
 <style>
   body {
     margin: 0;
@@ -137,6 +137,7 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+// Random letters/numbers for chaos
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()[]{}<>?/|\\";
 const fontSize = 16;
 const columns = Math.floor(canvas.width / fontSize);
@@ -168,20 +169,19 @@ function flickerText() {
   setTimeout(flickerText, Math.random()*100);
 }
 
-// Sequence of animations
+// Start everything
 setTimeout(() => {
-  // Start Matrix rain and flicker
   setInterval(drawMatrix, 35);
   flickerText();
 }, 2500);
 
-// Flash CLOVER after message shows
+// Flash CLOVER after message
 setTimeout(() => {
   cloverFlash.style.opacity = 1;
   setTimeout(() => {
     cloverFlash.style.opacity = 0;
-  }, 300); // Flash duration
-}, 5000); // Adjust timing to show after text
+  }, 300); 
+}, 5000);
 </script>
 
 </body>
