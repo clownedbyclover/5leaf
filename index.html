@@ -2,203 +2,135 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>h4ck3r_sp4m_9842</title>
+<title>9F3K8D2L0Q7X4M1Z6A</title>
+
 <style>
-  body {
-    margin: 0;
-    background: black;
-    color: #00ff00;
-    font-family: monospace;
-    overflow: hidden;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-  }
+body {
+margin:0;
+background:black;
+color:#00ff00;
+font-family:monospace;
+overflow:hidden;
+height:100vh;
+position:relative;
+}
 
-  /* Hacker text */
-  .drip-text {
-    font-size: 2em;
-    position: relative;
-    opacity: 0;
-    white-space: pre-wrap;
-    transition: opacity 0.5s;
-    z-index: 10;
-    text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00;
-  }
+/* Matrix canvas */
+canvas {
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:1;
+}
 
-  .glitch {
-    position: relative;
-  }
-  .glitch::before, .glitch::after {
-    content: "a friend of his, is an enemy of mine.";
-    position: absolute;
-    left: 0;
-  }
-  .glitch::before {
-    animation: glitchTop 2s infinite linear alternate-reverse;
-    clip: rect(0, 900px, 50px, 0);
-  }
-  .glitch::after {
-    animation: glitchBottom 3s infinite linear alternate-reverse;
-    clip: rect(50px, 900px, 100px, 0);
-  }
+/* Final Clover Screen */
+#final {
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+color:red;
+font-size:6em;
+opacity:0;
+z-index:20;
+text-shadow:
+0 0 5px red,
+0 0 15px red,
+0 0 30px red,
+0 0 60px red;
+letter-spacing:10px;
+}
 
-  @keyframes glitchTop {
-    0% { transform: translate(2px, -2px); }
-    20% { transform: translate(-2px, 2px); }
-    40% { transform: translate(2px, 2px); }
-    60% { transform: translate(-2px, -2px); }
-    80% { transform: translate(2px, -2px); }
-    100% { transform: translate(0, 0); }
-  }
-  @keyframes glitchBottom {
-    0% { transform: translate(-2px, 2px); }
-    20% { transform: translate(2px, -2px); }
-    40% { transform: translate(-2px, -2px); }
-    60% { transform: translate(2px, 2px); }
-    80% { transform: translate(-2px, 2px); }
-    100% { transform: translate(0, 0); }
-  }
+/* Screen glitch */
+.glitch-screen {
+animation: screenGlitch 0.3s infinite;
+}
 
-  /* Big :) animation */
-  #smile {
-    font-size: 10em;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    animation: smileIn 1s forwards, smileGlitch 1s 1s forwards, smileDisappear 0.5s 2s forwards;
-    z-index: 10;
-    text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
-  }
-
-  @keyframes smileIn {
-    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5) rotate(0deg); }
-    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2) rotate(15deg); }
-    100% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
-  }
-
-  @keyframes smileGlitch {
-    0%,100% { transform: translate(-50%, -50%) rotate(0deg); }
-    10% { transform: translate(calc(-50% + 5px), calc(-50% + 3px)) rotate(5deg); }
-    20% { transform: translate(calc(-50% - 4px), calc(-50% - 4px)) rotate(-5deg); }
-    30% { transform: translate(calc(-50% + 3px), calc(-50% + 5px)) rotate(3deg); }
-    40% { transform: translate(calc(-50% + 2px), calc(-50% - 2px)) rotate(-2deg); }
-  }
-
-  @keyframes smileDisappear {
-    0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-    100% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
-  }
-
-  /* Flashing CLOVER multiple times */
-  #clover-flash {
-    font-size: 5em;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #00ff00;
-    opacity: 0;
-    z-index: 20;
-    text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
-    animation: cloverShake 0.1s ease-in-out;
-  }
-
-  @keyframes cloverShake {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    25% { transform: translate(calc(-50% + 3px), calc(-50% - 2px)) rotate(5deg); }
-    50% { transform: translate(calc(-50% - 3px), calc(-50% + 2px)) rotate(-5deg); }
-    75% { transform: translate(calc(-50% + 2px), calc(-50% - 3px)) rotate(3deg); }
-    100% { transform: translate(-50%, -50%) rotate(0deg); }
-  }
-
-  /* Matrix letters canvas */
-  canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-  }
+@keyframes screenGlitch {
+0% { transform: translate(0px,0px); }
+20% { transform: translate(-3px,2px); }
+40% { transform: translate(3px,-2px); }
+60% { transform: translate(-2px,-3px); }
+80% { transform: translate(2px,3px); }
+100% { transform: translate(0px,0px); }
+}
 
 </style>
 </head>
+
 <body>
 
-<div id="smile">:)</div>
-<div id="message" class="drip-text glitch">a friend of his, is an enemy of mine.</div>
-<div id="clover-flash">CLOVER</div>
 <canvas id="matrix"></canvas>
+<div id="final">CLOVER</div>
 
 <script>
-const message = document.getElementById('message');
-const smile = document.getElementById('smile');
-const cloverFlash = document.getElementById('clover-flash');
 
-// MATRIX RAIN
-const canvas = document.getElementById('matrix');
-const ctx = canvas.getContext('2d');
+/* Matrix Rain */
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// Random letters/numbers for chaos
-const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()[]{}<>?/|\\";
+const letters =
+"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
 const fontSize = 16;
-const columns = Math.floor(canvas.width / fontSize);
+const columns = canvas.width / fontSize;
+
 const drops = [];
-for(let i = 0; i < columns; i++) drops[i] = Math.random() * canvas.height;
 
-function drawMatrix() {
-  ctx.fillStyle = "rgba(0,0,0," + (Math.random()*0.05+0.02) + ")";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
+for(let x = 0; x < columns; x++)
+drops[x] = 1;
 
-  ctx.fillStyle = "#00ff00";
-  ctx.font = fontSize + "px monospace";
-  for(let i = 0; i < drops.length; i++) {
-    const text = letters.charAt(Math.floor(Math.random() * letters.length));
-    ctx.fillText(text, i*fontSize, drops[i]);
-    drops[i] += fontSize;
-    if(drops[i] > canvas.height && Math.random() > 0.975) drops[i] = 0;
-  }
+function draw() {
+
+ctx.fillStyle = "rgba(0,0,0,0.05)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle = "#00ff00";
+ctx.font = fontSize + "px monospace";
+
+for(let i = 0; i < drops.length; i++){
+
+const text =
+letters.charAt(
+Math.floor(Math.random()*letters.length)
+);
+
+ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+
+if(drops[i]*fontSize > canvas.height && Math.random() > 0.975)
+drops[i] = 0;
+
+drops[i]++;
 }
 
-// Flicker hacker text
-function flickerText() {
-  const flickerAmount = Math.random();
-  if(flickerAmount > 0.7) {
-    message.style.opacity = Math.random();
-  } else {
-    message.style.opacity = 1;
-  }
-  setTimeout(flickerText, Math.random()*100);
 }
 
-// Start everything
-setTimeout(() => {
-  setInterval(drawMatrix, 35);
-  flickerText();
-}, 2500);
+setInterval(draw, 33);
 
-// Flash CLOVER multiple times after message
-function flashClover(times, interval) {
-  let count = 0;
-  const flasher = setInterval(() => {
-    cloverFlash.style.opacity = 1;
-    setTimeout(() => { cloverFlash.style.opacity = 0; }, interval / 2);
-    count++;
-    if(count >= times) clearInterval(flasher);
-  }, interval);
-}
 
-// Start flashing CLOVER after 5 seconds
-setTimeout(() => {
-  flashClover(5, 400); // flash 5 times, every 400ms
-}, 5000);
+/* After 5 seconds — glitch + blackout */
+
+setTimeout(()=>{
+
+document.body.classList.add("glitch-screen");
+
+setTimeout(()=>{
+
+document.body.style.background = "black";
+canvas.style.display = "none";
+
+const final = document.getElementById("final");
+final.style.opacity = "1";
+
+},1200);
+
+},5000);
+
 </script>
 
 </body>
