@@ -62,25 +62,26 @@
     100% { transform: translate(0, 0); }
   }
 
-  /* Clover */
-  #clover {
-    width: 150px;
-    height: 150px;
+  /* Big :) animation */
+  #smile {
+    font-size: 10em;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     opacity: 0;
-    animation: cloverIn 1s forwards, cloverGlitch 1s 1s forwards, cloverDisappear 0.5s 2s forwards;
+    animation: smileIn 1s forwards, smileGlitch 1s 1s forwards, smileDisappear 0.5s 2s forwards;
+    z-index: 10;
+    text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
   }
 
-  @keyframes cloverIn {
+  @keyframes smileIn {
     0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5) rotate(0deg); }
     50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2) rotate(15deg); }
     100% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
   }
 
-  @keyframes cloverGlitch {
+  @keyframes smileGlitch {
     0%,100% { transform: translate(-50%, -50%) rotate(0deg); }
     10% { transform: translate(calc(-50% + 5px), calc(-50% + 3px)) rotate(5deg); }
     20% { transform: translate(calc(-50% - 4px), calc(-50% - 4px)) rotate(-5deg); }
@@ -88,9 +89,22 @@
     40% { transform: translate(calc(-50% + 2px), calc(-50% - 2px)) rotate(-2deg); }
   }
 
-  @keyframes cloverDisappear {
+  @keyframes smileDisappear {
     0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
     100% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+  }
+
+  /* Flashing CLOVER */
+  #clover-flash {
+    font-size: 5em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #00ff00;
+    opacity: 0;
+    z-index: 20;
+    text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
   }
 
   /* Matrix letters canvas */
@@ -107,14 +121,15 @@
 </head>
 <body>
 
-<!-- Use a local PNG file called clover.png in your repo -->
-<img id="clover" src="clover.png" alt="4-leaf clover">
+<div id="smile">:)</div>
 <div id="message" class="drip-text glitch">a friend of his, is an enemy of mine.</div>
+<div id="clover-flash">CLOVER</div>
 <canvas id="matrix"></canvas>
 
 <script>
 const message = document.getElementById('message');
-const clover = document.getElementById('clover');
+const smile = document.getElementById('smile');
+const cloverFlash = document.getElementById('clover-flash');
 
 // MATRIX RAIN
 const canvas = document.getElementById('matrix');
@@ -129,7 +144,6 @@ const drops = [];
 for(let i = 0; i < columns; i++) drops[i] = Math.random() * canvas.height;
 
 function drawMatrix() {
-  // Slight background flicker
   ctx.fillStyle = "rgba(0,0,0," + (Math.random()*0.05+0.02) + ")";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
@@ -143,7 +157,7 @@ function drawMatrix() {
   }
 }
 
-// Random flicker effect for hacker text
+// Flicker hacker text
 function flickerText() {
   const flickerAmount = Math.random();
   if(flickerAmount > 0.7) {
@@ -154,12 +168,20 @@ function flickerText() {
   setTimeout(flickerText, Math.random()*100);
 }
 
-// Start after clover disappears
+// Sequence of animations
 setTimeout(() => {
-  message.style.opacity = 1;
+  // Start Matrix rain and flicker
   setInterval(drawMatrix, 35);
   flickerText();
 }, 2500);
+
+// Flash CLOVER after message shows
+setTimeout(() => {
+  cloverFlash.style.opacity = 1;
+  setTimeout(() => {
+    cloverFlash.style.opacity = 0;
+  }, 300); // Flash duration
+}, 5000); // Adjust timing to show after text
 </script>
 
 </body>
