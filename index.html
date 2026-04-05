@@ -1,59 +1,165 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>System Breach</title>
-
+<meta charset="UTF-8">
+<title>Creepy Hacker Message</title>
 <style>
-body {
-background: black;
-color: #00ff00;
-font-family: "Courier New", monospace;
-display: flex;
-justify-content: center;
-align-items: center;
-height: 100vh;
-font-size: 2em;
-text-shadow: 0 0 5px #00ff00;
-}
+  body {
+    margin: 0;
+    background: black;
+    color: #00ff00;
+    font-family: monospace;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
 
-.cursor {
-display: inline-block;
-width: 10px;
-background: #00ff00;
-margin-left: 5px;
-animation: blink 1s infinite;
-}
+  /* Hacker text */
+  .drip-text {
+    font-size: 2em;
+    position: relative;
+    opacity: 0;
+    white-space: pre-wrap;
+    transition: opacity 0.5s;
+    z-index: 10;
+    text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00;
+  }
 
-@keyframes blink {
-0% { opacity: 1; }
-50% { opacity: 0; }
-100% { opacity: 1; }
-}
+  .glitch {
+    position: relative;
+  }
+  .glitch::before, .glitch::after {
+    content: "a friend of his, is an enemy of mine.";
+    position: absolute;
+    left: 0;
+  }
+  .glitch::before {
+    animation: glitchTop 2s infinite linear alternate-reverse;
+    clip: rect(0, 900px, 50px, 0);
+  }
+  .glitch::after {
+    animation: glitchBottom 3s infinite linear alternate-reverse;
+    clip: rect(50px, 900px, 100px, 0);
+  }
+
+  @keyframes glitchTop {
+    0% { transform: translate(2px, -2px); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(2px, 2px); }
+    60% { transform: translate(-2px, -2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0, 0); }
+  }
+  @keyframes glitchBottom {
+    0% { transform: translate(-2px, 2px); }
+    20% { transform: translate(2px, -2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(-2px, 2px); }
+    100% { transform: translate(0, 0); }
+  }
+
+  /* Clover */
+  #clover {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    animation: cloverIn 1s forwards, cloverGlitch 1s 1s forwards, cloverDisappear 0.5s 2s forwards;
+  }
+
+  @keyframes cloverIn {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5) rotate(0deg); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2) rotate(15deg); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+  }
+
+  @keyframes cloverGlitch {
+    0%,100% { transform: translate(-50%, -50%) rotate(0deg); }
+    10% { transform: translate(calc(-50% + 5px), calc(-50% + 3px)) rotate(5deg); }
+    20% { transform: translate(calc(-50% - 4px), calc(-50% - 4px)) rotate(-5deg); }
+    30% { transform: translate(calc(-50% + 3px), calc(-50% + 5px)) rotate(3deg); }
+    40% { transform: translate(calc(-50% + 2px), calc(-50% - 2px)) rotate(-2deg); }
+  }
+
+  @keyframes cloverDisappear {
+    0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+  }
+
+  /* Matrix letters canvas */
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
 </style>
-
 </head>
-
 <body>
 
-<div>
-<span id="text"></span>
-<span class="cursor"></span>
-</div>
+<img id="clover" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Four-leaf_clover.svg/1024px-Four-leaf_clover.svg.png" alt="4-leaf clover">
+<div id="message" class="drip-text glitch">a friend of his, is an enemy of mine.</div>
+<canvas id="matrix"></canvas>
 
 <script>
-const message = "a friend of his, is an enemy of mine.";
-let index = 0;
+const message = document.getElementById('message');
+const clover = document.getElementById('clover');
 
-function typeEffect() {
-if (index < message.length) {
-document.getElementById("text").innerHTML += message.charAt(index);
-index++;
-setTimeout(typeEffect, 70);
-}
+// MATRIX RAIN
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()[]{}<>?/|\\";
+const fontSize = 16;
+const columns = Math.floor(canvas.width / fontSize);
+const drops = [];
+for(let i = 0; i < columns; i++) drops[i] = Math.random() * canvas.height;
+
+function drawMatrix() {
+  // Slight background flicker
+  ctx.fillStyle = "rgba(0,0,0," + (Math.random()*0.05+0.02) + ")";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  ctx.fillStyle = "#00ff00";
+  ctx.font = fontSize + "px monospace";
+  for(let i = 0; i < drops.length; i++) {
+    const text = letters.charAt(Math.floor(Math.random() * letters.length));
+    ctx.fillText(text, i*fontSize, drops[i]);
+    drops[i] += fontSize;
+    if(drops[i] > canvas.height && Math.random() > 0.975) drops[i] = 0;
+  }
 }
 
-window.onload = typeEffect;
+// Random flicker effect for hacker text
+function flickerText() {
+  const flickerAmount = Math.random();
+  if(flickerAmount > 0.7) {
+    message.style.opacity = Math.random();
+  } else {
+    message.style.opacity = 1;
+  }
+  setTimeout(flickerText, Math.random()*100);
+}
+
+// Start after clover disappears
+setTimeout(() => {
+  message.style.opacity = 1;
+  setInterval(drawMatrix, 35);
+  flickerText();
+}, 2500);
+
 </script>
-
 </body>
 </html>
