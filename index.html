@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Matrix Chaos</title>
+<title>h4ck3r_sp4m_9842</title>
 <style>
   body {
     margin: 0;
@@ -94,7 +94,7 @@
     100% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
   }
 
-  /* Flashing CLOVER */
+  /* Flashing CLOVER multiple times */
   #clover-flash {
     font-size: 5em;
     position: absolute;
@@ -105,6 +105,15 @@
     opacity: 0;
     z-index: 20;
     text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+    animation: cloverShake 0.1s ease-in-out;
+  }
+
+  @keyframes cloverShake {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    25% { transform: translate(calc(-50% + 3px), calc(-50% - 2px)) rotate(5deg); }
+    50% { transform: translate(calc(-50% - 3px), calc(-50% + 2px)) rotate(-5deg); }
+    75% { transform: translate(calc(-50% + 2px), calc(-50% - 3px)) rotate(3deg); }
+    100% { transform: translate(-50%, -50%) rotate(0deg); }
   }
 
   /* Matrix letters canvas */
@@ -175,12 +184,20 @@ setTimeout(() => {
   flickerText();
 }, 2500);
 
-// Flash CLOVER after message
+// Flash CLOVER multiple times after message
+function flashClover(times, interval) {
+  let count = 0;
+  const flasher = setInterval(() => {
+    cloverFlash.style.opacity = 1;
+    setTimeout(() => { cloverFlash.style.opacity = 0; }, interval / 2);
+    count++;
+    if(count >= times) clearInterval(flasher);
+  }, interval);
+}
+
+// Start flashing CLOVER after 5 seconds
 setTimeout(() => {
-  cloverFlash.style.opacity = 1;
-  setTimeout(() => {
-    cloverFlash.style.opacity = 0;
-  }, 300); 
+  flashClover(5, 400); // flash 5 times, every 400ms
 }, 5000);
 </script>
 
